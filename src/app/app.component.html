@@ -1,20 +1,211 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<app-layout>
+  <div class="container">
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-3">
+            <select id="candidate" name="candidate" ng-model="CandidateId" ng-change="getCandidateData(CandidateId)" class="form-control">
+                <option value="">Select</option>
+                <option value="1">Candidate 1</option>
+                <option value="2">Candidate 2</option>
+            </select>
+        </div>
+        <div class="col-md-9">
+            <span class="badge {{badge}}" ></span>
+            <h3 *ngFor="let x of ExistingData" ng-click="details(x.Id)" style="cursor:pointer;">
+            <span class="badge {{badge}}" ng-click="badge=badge=='badge-secondary'?'badge-warning':'badge-secondary'">{{x.Title}}</span>
+            </h3>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-3">
+            <input type="file" onchange="angular.element(this).scope().LoadFileData(this.files)" />
+        </div>
+        <div class="col-md-3">
+            <input type="text" ng-model="Title" class="form-control" />
+        </div>
+        <div class="col-md-1">
+            {{Mode}}
+        </div>
+        <div class="col-md-5">
+            <!-- <div class="videoobject">
+                <app-videos></app-videos>
+            </div>
+            <div class="audioobject">
+                <app-audio></app-audio>
+                <app-audio></app-audio>
+                <app-audio></app-audio>
+            </div> -->
+            
+        </div>
+    </div>
+    
+    <br />
+    <div class="row">
+
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="col-md-12">
+                        <div class="realobject">
+                            <img style="width:100%;" src="http://localhost:58456/Files/Images/Presenter/{{avatar}}" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="realobject">
+                            <img style="width:100%;" src="http://localhost:58456/Files/Images/pie-chart.png" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="col-md-12">
+                        <div class="realobject">
+                            <img style="width:100%;" src="http://localhost:58456/Files/Images/hand.png" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="realobject">
+                            <img style="width:100%;" src="http://localhost:58456/Files/Images/money.png" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-primary" (click)="getService()">Submit</button>
+                    </div>
+                    <br />
+                    <div class="col-md-12">
+                        <button class="btn btn-danger" ng-click="reset()">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="card" style="height:17rem;">
+                        <div class="card-body">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="realobject  trigger">
+                                            <div class="figure-content">
+                                                <svg width="100%" height="100%" viewBox="0 0 42 42" class="donut" aria-labelledby="beers-title beers-desc" role="img">
+                                                    <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="#007bff" stroke="#007bff" stroke-width="3"
+                                                            stroke-dasharray="130" stroke-dashoffset="25" aria-labelledby="donut-segment-1-title donut-segment-1-desc">
+                                                        <title id="donut-segment-1-title">Belgian Quadrupels</title>
+                                                    </circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="realobject trigger">
+                                            <div class="figure-content">
+                                                <svg width="100%" height="100%" viewBox="0 0 42 42" class="donut" aria-labelledby="beers-title beers-desc" role="img">
+                                                    <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="#dc3545" stroke="#dc3545" stroke-width="3"
+                                                            stroke-dasharray="130" stroke-dashoffset="25" aria-labelledby="donut-segment-1-title donut-segment-1-desc">
+                                                        <title id="donut-segment-1-title">Belgian Quadrupels</title>
+                                                    </circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="realobject trigger">
+                                            <div class="figure-content">
+                                                <svg width="100%" height="100%" viewBox="0 0 42 42" class="donut" aria-labelledby="beers-title beers-desc" role="img">
+                                                    <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="#ffc107" stroke="#ffc107" stroke-width="3"
+                                                            stroke-dasharray="130" stroke-dashoffset="25" aria-labelledby="donut-segment-1-title donut-segment-1-desc">
+                                                        <title id="donut-segment-1-title">Belgian Quadrupels</title>
+                                                    </circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div style="margin:5px;" class="btn btn-primary btnObj trigger">{{button}}</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div style="margin:5px;" class="btn btn-success btnObj trigger">{{button}}</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div style="margin:5px;" class="btn btn-danger btnObj trigger">{{button}}</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div style="margin:5px;" class="btn btn-warning btnObj trigger">{{button}}</div>
+                                </div>
+                            </div>
+                            <input  [(ngModel)]="button" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="card" style="height:17rem;">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="realobject {{bg}}" style="width:150px;height:150px;border-radius:100%;margin:5px;">
+                                        <p class="text-center {{textColor}}" style="position:relative;padding:10px;">{{paragraph}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="realobject {{bg}}" style="width:150px;height:150px;margin:5px;">
+                                        <p class="text-center {{textColor}}" style="position:relative;padding:10px;">{{paragraph}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="alert alert-primary realobject" role="alert">
+                                        {{paragraph}}
+                                    </div>
+                                </div>
+                            </div>
+                            <input [(ngModel)]="paragraph" class="form-control" style="margin-bottom:5px;font-size:10px;" value="Button" />
+                            <button class="btn btn-primary btn-sm" (click)="changeBackgroundColor('bg-primary')">B</button>
+                            <button class="btn btn-success btn-sm" (click)="changeBackgroundColor('bg-success')">B</button>
+                            <button class="btn btn-danger btn-sm" (click)="changeBackgroundColor('bg-danger')">B</button>
+                            <button class="btn btn-warning btn-sm" (click)="changeBackgroundColor('bg-warning')">B</button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <button class="btn btn-dark btn-sm" (click)="changeTextColor('text-dark')">P</button>
+                            <button class="btn btn-default btn-sm" (click)="changeTextColor('text-white')">P</button>
+                            <button class="btn btn-danger btn-sm" (click)="changeTextColor('text-danger')">P</button>
+                            <button class="btn btn-warning btn-sm" (click)="changeTextColor('text-warning')">P</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card" style="height:35rem;">
+                        <div class="card-body">
+                            <div id="container" style="width:100%;z-index:-1;padding:20px;height:32.2rem;" class="ui-widget-content"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br />
+    <div class="row">
+
+    </div>
+
+
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="row">
+    <div id="dialog" class="col-md-12" style="height:200px !important">
+        <textarea class="editor"></textarea>
+    </div>
+</div>
+
+
+</app-layout>
 

@@ -1,0 +1,153 @@
+
+/* style.css start */
+
+#container {
+    background: #fbf9f9;
+}
+
+/* .canvas-element { */
+    /*padding: 0px;*/
+/* } */
+
+.realobject {
+    width: 100px;
+}
+
+
+.realobject img {
+    width: 100%;
+    height: 100%;
+}
+
+.resize_box {
+    padding: 0px;
+    width: 50px;
+}
+
+.resize_box img {
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.ui-icon, .ui-widget-content .ui-icon:hover {
+    background-image: none;
+}
+
+.ui-draggable-dragging {
+    z-index: 25;
+    border: 2px dashed red;
+}
+
+.ui-selected {
+    /*padding: 0px;*/
+    border: 2px dashed #3462FA;
+}
+
+.animation {
+    -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+    transition: width 2s;
+}
+
+.circle {
+    background-color:dodgerblue;
+    width: 120px;
+    height: 120px;
+    margin: auto;
+    border-radius:70px;
+    right: 0;
+    left: 0;
+    float: left;
+    cursor: pointer;
+}
+
+/*.circle:before {
+    content: ' \25CF';
+    font-size: 200px;
+}*/
+
+/* style.css end */
+
+/*
+** candidate.css start
+*/
+
+#container {
+    background: #fbf9f9;
+}
+
+/* .canvas-element { */
+    /*padding: 0px;*/
+/* } */
+
+.realobject {
+    width: 100px;
+}
+
+
+.realobject img {
+    width: 100%;
+    height: 100%;
+}
+
+.resize_box {
+    width: 50px;
+}
+
+.resize_box img {
+    width: 100%;
+    height: 100%;
+}
+#dialog{
+    display: none;
+}
+.ui-icon, .ui-widget-content .ui-icon:hover {
+    background-image: none;
+}
+
+.ui-draggable-dragging {
+    z-index: 25;
+    border: 2px dashed red;
+}
+ 
+/*
+** candidate.css end
+*/
+
+
+/* page */
+.page-wrapper {
+    margin: 0 auto;
+    width: 960px;
+    max-width: 100%;
+}
+
+
+/* box */
+.box-content {
+    padding:20px;
+    background-color: #EFEFEF;
+}
+
+
+textarea {
+    background-color:#FAFAFA;
+    border:#EFEFEF solid 1px;
+    color:#333;
+    height:150px;
+    width:100%;
+}
+
+
+/* richtext custom style */
+.richText {
+    margin-top: 40px;
+    -webkit-box-shadow: 0 0 20px 0 #999;
+    -moz-box-shadow: 0 0 20px 0 #999;
+    box-shadow: 0 0 20px 0 #999;
+}
+.ui-widget.ui-widget-content {
+    width: 600px !important;
+    max-width: 100% !important;
+}
