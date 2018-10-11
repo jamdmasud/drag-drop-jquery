@@ -94,10 +94,7 @@ addJquery(): void {
           $(this).removeClass('ui-draggable-dragging');
       }
   });
-
-$('p').click(function() {
-    $( '#dialog' ).dialog({draggable: false});
-});
+ 
 
   $('#container').droppable({
     drop: function (event, ui) {
