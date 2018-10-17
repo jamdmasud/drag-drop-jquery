@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer, ElementRef } from '@angular/core';
+import { Component, OnInit, Renderer, ElementRef, Input } from '@angular/core';
 import {HttpService} from '../app/services/http.service';
 import { ObjectDesign } from './models/objectDesign';
 declare var $: any;
@@ -9,7 +9,6 @@ declare var $: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-
 
   title = 'drag-drop-jquery';
   public ExistingData = [{Title: 'Training Batch', Id: 1}];
@@ -58,7 +57,10 @@ getService(): void {
     });
 
 }
+dataBinds(evt): void {
+  alert($(document).data('bind'));
 
+}
 changeBackgroundColor(color: string) {
     this.bg = color;
 }
@@ -71,6 +73,71 @@ addJquery(): void {
  $(document).ready(function() {
 
   let zindex = 1;
+  let menuVisible = false;
+  const menu = document.querySelector('.menu');
+  const toggleMenu = command => {
+    const indicator = command === 'show' ? 'block' : 'none';
+      $('.menu').css({'display': indicator});
+      menuVisible = !menuVisible;
+  };
+
+  const setPosition = ({ top, left }) => {
+    $('.menu').css({'position': 'absolute', 'left': `${left}px`, 'top': `${top}px`});
+    toggleMenu('show');
+  };
+
+  $(document).on('click', '.menu-options', function(e) {
+    toggleMenu('hide');
+  });
+
+  $(document).on('contextmenu', '#container', function(e) {
+    e.preventDefault();
+    const body = document.getElementsByTagName('body');
+    const X = body[0].offsetLeft;
+    const Y = body[0].offsetTop;
+    const origin = {
+      left: e.clientX - X,
+      top: e.clientY - Y
+    };
+    setPosition(origin);
+    return false;
+  });
+
+  function showYes() {
+    $('.objYes').css({ 'visibility': 'visible' });
+    $('.objNo').css({ 'visibility': 'hidden' });
+}
+
+function showNo() {
+  $('.objNo').css({ 'visibility': 'visible' });
+  $('.objYes').css({ 'visibility': 'hidden' });
+}
+
+$('.yesMenu').click(function(e) {
+  const con = document.getElementById('container');
+  const elm = con.getElementsByClassName('ui-selected');
+  for (let i = 0; i < elm.length; i++) {
+    if (elm[i].classList.contains('realobject')) {
+      elm[i].classList.add('objYes');
+    }
+    if (elm[i].classList.contains('btnObj')) {
+      elm[i].addEventListener('click', showYes, false);
+    }
+  }
+});
+
+$('.noMenu').click(function(e) {
+  const con = document.getElementById('container');
+  const elm = con.getElementsByClassName('ui-selected');
+  for (let i = 0; i < elm.length; i++) {
+    if (elm[i].classList.contains('realobject')) {
+      elm[i].classList.add('objNo');
+    }
+    if (elm[i].classList.contains('btnObj')) {
+      elm[i].addEventListener('click', showNo, false);
+    }
+  }
+});
 
   // $("#container").html(div);
   function initDraggable(c) {
@@ -83,7 +150,7 @@ addJquery(): void {
 
   initDraggable($('.canvas-element'));
 
-  $('.realobject, .btnObj').draggable({
+  $('.realobject, .btnObj, .icon-image').draggable({
       helper: 'clone',
       cursor: 'move',
       revert: true,
@@ -94,7 +161,7 @@ addJquery(): void {
           $(this).removeClass('ui-draggable-dragging');
       }
   });
- 
+
 
   $('#container').droppable({
     drop: function (event, ui) {
@@ -144,10 +211,17 @@ addJquery(): void {
   });
 
   $(document).on('dblclick', '.realobject', function (e) {
-        $('#inp').remove();
-        const input = $('<input type="text" id="inp" style="position:absolute;top:10px;left:0;z-index:1000" />');
-        $('.ui-selected p').append(input);
-    // console.log(position.x, position.y);
+    e.preventDefault();
+    $( '#dialog' ).dialog({
+        draggable: false,
+        open: function(evt, ui) {
+            $('.richText-editor').html($('.ui-selected p').html());
+        },
+        close: function( event, ui ) {
+            const html = $('.richText-editor').html();
+            $('.ui-selected p').html(html);
+        }
+    });
   });
 
   function rPosition(mouseX, mouseY) {
@@ -157,29 +231,19 @@ addJquery(): void {
     return {'x': x, 'y': y};
    }
 
-  $(document).on('click', '.resize_box', function () {
-
-    $(this).css('z-index', zindex++);
-    if ($(this).hasClass('ui-selected')) {
-        $(this).removeClass('ui-selected');
-    } else {
-        $(this).addClass('ui-selected');
-    }
-  });
-
-  $(document).on('click', '.realobject, .btnObj', function (evt) {
+  $('.theme-image').click(function() {
     const imgName = $(this).find('img').attr('src');
     $('#container').css({'background-image' : 'url(' + imgName + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover' });
+  });
 
+  $(document).on('click', '.realobject, .btnObj, .icon-image', function (evt) {
     if ($(this).hasClass('ui-selected')) {
-        setTimeout(function() {
-            $(this).removeClass('ui-selected');
-            if (!evt.ctrlKey) {
-                if ($(this).data('bind') !== undefined) {
-                    $('.' + $(this).data('bind')).css({ 'visibility': 'visible' });
-                }
+        $(this).removeClass('ui-selected');
+        if (!evt.ctrlKey) {
+            if ($(this).data('bind') !== undefined) {
+                $('.' + $(this).data('bind')).css({ 'visibility': 'visible' });
             }
-        }, 250);
+        }
     } else {
         $(this).addClass('ui-selected');
         if (!evt.ctrlKey) {
@@ -246,7 +310,7 @@ addJquery(): void {
             case 45:
                 e.preventDefault();
                 $( '#dialog' ).dialog({
-                    draggable: true,
+                    draggable: false,
                     open: function(evt, ui) {
                         $('.richText-editor').html($('.ui-selected p').html());
                     },
@@ -283,22 +347,19 @@ addJquery(): void {
     localStorage.setItem('DragDrop', $('#container').html());
   });
 
-
   $('#btnGet').click(function () {
-    // e.preventDefault();
-    // $('.resize_box').draggable('destroy');
-    $('#container').html(localStorage.getItem('DragDrop'));
-    initDraggable($('.canvas-element'));
-    $('.canvas-element').resizable({
-        handles: 'e, w, n, s'
-    });
+      $('#container').html(localStorage.getItem('DragDrop'));
+      initDraggable($('.canvas-element'));
+      $('.canvas-element').resizable({
+          handles: 'e, w, n, s'
+      });
     $('#container > .Digital8').css('opacity', .4);
 
   });
 
     });
 
-    // $('.editor').richText(); 
+    // $('.editor').richText();
 
     $('.editor').richText({
         // text formatting
@@ -428,6 +489,6 @@ addJquery(): void {
         class: '',
         useParagraph: false
       });
-}
+  }
 
 }

@@ -110,7 +110,7 @@
     z-index: 25;
     border: 2px dashed red;
 }
- 
+
 /*
 ** candidate.css end
 */
@@ -150,4 +150,39 @@ textarea {
 .ui-widget.ui-widget-content {
     width: 600px !important;
     max-width: 100% !important;
+}
+.theme-image img{
+  height: 120px;
+  width: 100%;
+}
+.tab-pane{
+  height: 140px;
+}
+.icon-image{
+  margin-top: 30px;
+  padding-top: 30px;
+}
+
+.menu {
+  width: 120px;
+  box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+  position: relative;
+  display: none;
+}
+
+.menu-options {
+  list-style: none;
+  padding: 10px 0;
+  z-index: 1000;
+}
+
+.menu-option {
+  font-weight: 500;
+  font-size: 14px;
+  padding: 10px 40px 10px 20px;
+  cursor: pointer;
+}
+
+.menu-option:hover {
+  background: rgba(0, 0, 0, 0.2);
 }
